@@ -67,6 +67,11 @@ unless the user explicitly approves that work.
 Before implementing a feature, read the relevant sections from all four documents.
 Do not rely only on a summary in this file for detailed contracts or data models.
 
+`docs/PROJECT_STATUS.md` tracks delivered milestones and the current implementation
+state. It is a progress record, not a fifth source of product or technical
+requirements. Read it when starting a feature so completed work and known gaps are
+clear.
+
 ## Current delivery state
 
 The approved application scaffold and foundation corrections are complete. The clean
@@ -412,9 +417,12 @@ For every new task:
 7. Add or update tests with the implementation.
 8. Run verification proportional to the risk, including all required checks for a
    completed feature or foundation change.
-9. Report files changed, dependencies changed, validation results, warnings, and any
-   deviation from the approved plan.
-10. Stop at the requested boundary; do not begin the next feature automatically.
+9. When a major feature or milestone is completed, update `docs/PROJECT_STATUS.md`
+   in the same change. Record what is actually implemented, meaningful verification,
+   and remaining limitations; distinguish static UI examples from working behavior.
+10. Report files changed, dependencies changed, validation results, warnings, and any
+    deviation from the approved plan.
+11. Stop at the requested boundary; do not begin the next feature automatically.
 
 Do not:
 
@@ -462,6 +470,7 @@ Update the project-owned sections of this file when a durable fact changes, incl
 - new integrations or repository-level conventions.
 
 Do not turn this file into a chronological work log. Keep durable constraints and the
-current implementation state here; use Git history for detailed change history. Preserve
-the Next.js-managed block verbatim and keep `CLAUDE.md` as the single reference to this
-file unless there is a compelling tool-compatibility reason to do otherwise.
+current implementation state here; use `docs/PROJECT_STATUS.md` for milestone
+progress and Git history for detailed changes. Preserve the Next.js-managed block
+verbatim and keep `CLAUDE.md` as the single reference to this file unless there is a
+compelling tool-compatibility reason to do otherwise.
