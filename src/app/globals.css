@@ -1,14 +1,76 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/fonts/plus-jakarta-sans-regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/fonts/plus-jakarta-sans-semibold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/fonts/plus-jakarta-sans-bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Serif";
+  src: url("/fonts/noto-serif-regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Serif";
+  src: url("/fonts/noto-serif-medium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Serif";
+  src: url("/fonts/noto-serif-semibold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Serif";
+  src: url("/fonts/noto-serif-bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Serif";
+  src: url("/fonts/noto-serif-italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
-  --color-background: #fffaf7;
-  --color-foreground: #2d1f24;
+  --color-background: #fff8f8;
+  --color-foreground: #1e1b1c;
   --color-muted: #6f5a62;
   --color-accent: #74243d;
-  --font-sans: "Avenir Next", Avenir, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-serif:
-    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia,
-    serif;
+  --font-sans: "Plus Jakarta Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-serif: "Noto Serif", Georgia, serif;
 }
 
 * {

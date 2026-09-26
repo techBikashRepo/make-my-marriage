@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 type IconName =
@@ -125,18 +126,18 @@ function Icon({
 function Brand({ light = false }: Readonly<{ light?: boolean }>) {
   return (
     <Link
-      className={`flex items-center gap-2.5 text-[15px] font-medium tracking-[-0.02em] ${light ? "text-white" : "text-[#3f222b]"}`}
+      className="flex shrink-0 items-center"
       href="/"
       aria-label="Make My Marriage home"
     >
-      <span
-        className={`grid size-9 place-items-center rounded-full border ${light ? "border-white/30 bg-white/10" : "border-[#decbd1] bg-white"}`}
-      >
-        <Icon name="heart" size={17} />
-      </span>
-      <span>
-        Make My <strong className="font-semibold">Marriage</strong>
-      </span>
+      <Image
+        alt="Make My Marriage — Wedding Operating System"
+        className={`h-12 w-auto object-contain ${light ? "brightness-0 invert" : ""}`}
+        height={256}
+        priority={!light}
+        src="/brand/make-my-marriage-logo.png"
+        width={512}
+      />
     </Link>
   );
 }
@@ -152,149 +153,150 @@ function Eyebrow({ children }: Readonly<{ children: React.ReactNode }>) {
 
 function DashboardPreview() {
   return (
-    <div className="relative mx-auto w-full max-w-[650px] lg:mx-0">
-      <div className="absolute -top-7 -right-1 z-20 hidden items-center gap-2 rounded-xl border border-[#eadde1] bg-white px-3 py-2 text-[10px] shadow-[0_14px_35px_rgba(75,30,43,0.13)] sm:flex lg:-right-6">
-        <span className="grid size-6 place-items-center rounded-full bg-[#e8f1e9] text-[#4b7358]">
-          <Icon name="check" size={13} />
+    <div className="relative mx-auto w-full max-w-[640px] lg:mx-0">
+      <div className="absolute -top-5 -right-7 z-20 hidden items-center gap-3 rounded-lg border border-[#d9c0c4] bg-white px-4 py-3 text-[10px] shadow-lg sm:flex">
+        <span className="grid size-7 place-items-center rounded-full bg-[#f7e6eb] text-[#74243d]">
+          <Icon name="sparkle" size={14} />
         </span>
         <span>
-          <strong className="block text-[#422a32]">RSVP received</strong>
-          <small className="text-[#8b747b]">Sharma family · 4 guests</small>
+          <small className="block tracking-[0.06em] text-[#756168] uppercase">
+            Photographer contract
+          </small>
+          <strong className="font-serif text-[#74243d]">
+            Advance payment logged
+          </strong>
         </span>
       </div>
-      <div className="overflow-hidden rounded-2xl border border-[#ddcbd1] bg-white shadow-[0_28px_80px_rgba(91,41,57,0.17)]">
-        <div className="flex h-9 items-center gap-3 border-b border-[#eee5e8] bg-[#faf7f8] px-3">
-          <span className="flex gap-1" aria-hidden="true">
-            <i className="size-1.5 rounded-full bg-[#d6aeb9]" />
-            <i className="size-1.5 rounded-full bg-[#dec7ad]" />
-            <i className="size-1.5 rounded-full bg-[#b9cfbd]" />
+
+      <div className="relative overflow-hidden rounded-lg border border-[#d9c0c4]/60 bg-white shadow-[0_24px_60px_rgba(86,42,55,0.14)]">
+        <div className="flex h-10 items-center justify-between border-b border-[#d9c0c4]/40 bg-[#f4eced] px-4">
+          <span className="flex gap-2" aria-hidden="true">
+            <i className="size-2 rounded-full bg-[#d9c0c4]/70" />
+            <i className="size-2 rounded-full bg-[#d9c0c4]/70" />
+            <i className="size-2 rounded-full bg-[#d9c0c4]/70" />
           </span>
-          <span className="mx-auto rounded bg-white px-12 py-1 text-[7px] text-[#9a858c] shadow-sm">
-            makemymarriage.in/dashboard
+          <span className="rounded border border-[#d9c0c4]/40 bg-white px-3 py-1 text-[7px] text-[#756168]">
+            🔒 app.makemymarriage.com/workspace/akshay-princi
           </span>
-          <span className="grid size-5 place-items-center rounded-full bg-[#74243d] text-[6px] text-white">
-            AP
-          </span>
+          <span className="w-6" />
         </div>
-        <div className="flex min-h-[350px] sm:min-h-[390px]">
-          <aside className="hidden w-[105px] shrink-0 border-r border-[#eee5e8] bg-[#fcfafb] p-3 sm:block">
-            <span className="mb-5 grid size-7 place-items-center rounded-lg bg-[#74243d] text-white">
-              <Icon name="heart" size={12} />
-            </span>
-            {["Overview", "Events", "Tasks", "Guests", "Expenses"].map(
-              (item, index) => (
-                <span
-                  className={`mb-1 block rounded px-2 py-2 text-[8px] ${index === 0 ? "bg-[#f4e5ea] font-bold text-[#74243d]" : "text-[#8a767d]"}`}
-                  key={item}
-                >
-                  {item}
-                </span>
-              ),
-            )}
-          </aside>
-          <div className="min-w-0 flex-1 bg-[#fffdfc] p-4 sm:p-5">
-            <header className="mb-4 flex items-start justify-between gap-4">
+
+        <div className="p-5 sm:p-6">
+          <header className="flex items-center justify-between border-b border-[#e7dadd] pb-4">
+            <div className="flex items-center gap-3">
+              <span className="grid size-10 place-items-center rounded bg-[#74243d] font-serif text-sm font-bold text-white">
+                A&amp;P
+              </span>
               <div>
-                <small className="text-[8px] text-[#957e85]">
-                  Good morning, Akshay
-                </small>
-                <h2 className="font-serif text-lg font-semibold text-[#3b252d] sm:text-xl">
-                  Akshay & Princi
+                <h2 className="font-serif text-base font-semibold text-[#2d2025]">
+                  Akshay &amp; Princi
                 </h2>
-                <p className="mt-1 text-[8px] text-[#8e787f]">
-                  The Leela Palace · Udaipur
+                <p className="text-[9px] text-[#756168]">
+                  The Leela Palace, Udaipur
                 </p>
               </div>
-              <div className="rounded-xl bg-[#74243d] px-3 py-2 text-center text-white">
-                <strong className="block font-serif text-lg leading-none">
-                  42
-                </strong>
-                <span className="text-[6px] uppercase">days to go</span>
-              </div>
-            </header>
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                ["calendar", "7", "Events", "bg-[#f7e7eb] text-[#8a304b]"],
-                ["tasks", "38/52", "Tasks done", "bg-[#f5eddc] text-[#8b682c]"],
-                ["guests", "214", "RSVPs", "bg-[#e8f0e8] text-[#51705a]"],
-              ].map(([icon, value, label, color]) => (
-                <div
-                  className="rounded-xl border border-[#eee3e6] bg-white p-2.5"
-                  key={label}
+            </div>
+            <span className="rounded-full bg-[#ffd9e0] px-4 py-2 font-serif text-[10px] font-semibold text-[#570c27]">
+              ⏳&nbsp;&nbsp;42 days to go
+            </span>
+          </header>
+
+          <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
+            {[
+              ["Events", "7"],
+              ["Tasks", "38/52"],
+              ["Guests", "326"],
+              ["RSVPs", "214"],
+              ["Expenses", "₹12.4L"],
+              ["Vendors", "8 Active"],
+            ].map(([label, value]) => (
+              <div className="border border-[#e8e1e2] bg-white p-2" key={label}>
+                <small className="block text-[7px] tracking-[0.06em] text-[#756168] uppercase">
+                  {label}
+                </small>
+                <strong
+                  className={`mt-1 block font-serif text-[11px] ${label === "Tasks" || label === "RSVPs" ? "text-[#74243d]" : "text-[#2d2025]"}`}
                 >
-                  <span
-                    className={`mb-2 grid size-6 place-items-center rounded-md ${color}`}
-                  >
-                    <Icon name={icon as IconName} size={13} />
-                  </span>
-                  <strong className="block text-[12px] text-[#412a32]">
-                    {value}
-                  </strong>
-                  <small className="text-[7px] text-[#927d84]">{label}</small>
-                </div>
-              ))}
-            </div>
-            <div className="mt-3 grid gap-3 md:grid-cols-2">
-              <div className="rounded-xl border border-[#eee3e6] bg-white p-3">
-                <div className="mb-2 flex justify-between text-[8px]">
-                  <strong>Upcoming events</strong>
-                  <span className="text-[#8c3e56]">View all</span>
-                </div>
-                {[
-                  ["18", "NOV", "Mehendi", "4:00 PM"],
-                  ["19", "NOV", "Sangeet", "7:30 PM"],
-                  ["20", "NOV", "Wedding", "6:00 PM"],
-                ].map(([day, month, name, time]) => (
-                  <div
-                    className="flex items-center gap-2 border-t border-[#f1e9eb] py-2"
-                    key={name}
-                  >
-                    <span className="w-7 text-center">
-                      <strong className="block font-serif text-[11px]">
-                        {day}
-                      </strong>
-                      <small className="block text-[5px] text-[#9c858c]">
-                        {month}
-                      </small>
-                    </span>
-                    <p className="text-[7px]">
-                      <strong className="block">{name}</strong>
-                      <small className="text-[#927d84]">{time}</small>
-                    </p>
-                  </div>
-                ))}
+                  {value}
+                </strong>
               </div>
-              <div className="rounded-xl border border-[#eee3e6] bg-white p-3">
-                <div className="mb-2 flex justify-between text-[8px]">
-                  <strong>Tasks</strong>
-                  <span className="text-[#8c3e56]">73%</span>
-                </div>
-                {[
-                  "Finalize guest list",
-                  "Confirm florist",
-                  "Review invitation",
-                ].map((task, index) => (
-                  <div
-                    className="flex items-center gap-2 border-t border-[#f1e9eb] py-2"
-                    key={task}
-                  >
-                    <span
-                      className={`grid size-3 place-items-center rounded-full border ${index === 0 ? "border-[#6e8b73] bg-[#6e8b73] text-white" : "border-[#d9c9ce]"}`}
-                    >
-                      {index === 0 ? <Icon name="check" size={8} /> : null}
-                    </span>
-                    <p className="min-w-0 flex-1 text-[7px]">
-                      <strong className="block truncate">{task}</strong>
-                      <small className="text-[#927d84]">
-                        {index === 0 ? "Due today" : "This week"}
-                      </small>
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
+
+        <div className="border-t border-[#e7dadd] bg-[#fffdfd] p-5 sm:p-6">
+          <div className="flex items-center justify-between text-[9px]">
+            <strong className="font-serif">Sequential Events</strong>
+            <span className="font-semibold text-[#74243d]">View Schedule</span>
+          </div>
+          <div className="mt-3 grid grid-cols-3 gap-2">
+            {[
+              ["FEB 12", "Mehendi & Sundowner", "Courtyard Lawn · 4:00 PM"],
+              ["FEB 13", "The Grand Sangeet", "Main Ballroom · 7:30 PM"],
+              ["FEB 14", "Varmala & Pheras", "Lakeside Pavilion · 10:30 AM"],
+            ].map(([date, event, detail]) => (
+              <div
+                className="rounded border border-[#74243d] bg-[#fff8f8] p-3"
+                key={event}
+              >
+                <span className="text-[7px] font-bold text-[#74243d]">
+                  {date}
+                </span>
+                <strong className="mt-1 block font-serif text-[9px] leading-3">
+                  {event}
+                </strong>
+                <small className="mt-2 block text-[6px] text-[#756168]">
+                  {detail}
+                </small>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 flex items-center justify-between text-[9px]">
+            <strong className="font-serif">Priority Action Items</strong>
+            <span className="text-[#756168]">3 of 8 today</span>
+          </div>
+          <div className="mt-2 space-y-1.5">
+            {[
+              ["Approve Sangeet choreography playlist", "Princi", true],
+              ["Review finalized catering menu", "Mom (Sunita)", false],
+              ["Confirm florist contract", "Rahul (Bro)", false],
+            ].map(([task, owner, done]) => (
+              <div
+                className="flex items-center gap-2 rounded border border-[#e8e1e2] bg-white px-3 py-2 text-[8px]"
+                key={String(task)}
+              >
+                <span
+                  className={`grid size-4 place-items-center border ${done ? "border-[#74243d] text-[#74243d]" : "border-[#d9c0c4]"}`}
+                >
+                  {done ? <Icon name="check" size={10} /> : null}
+                </span>
+                <span
+                  className={`min-w-0 flex-1 truncate ${done ? "line-through" : ""}`}
+                >
+                  {task}
+                </span>
+                <span className="bg-[#ffd9e0] px-2 py-1 font-semibold text-[#570c27]">
+                  {owner}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute -bottom-4 -left-5 z-20 hidden items-center gap-3 rounded-lg border border-[#d9c0c4] bg-white px-4 py-3 text-[10px] shadow-lg sm:flex">
+        <span className="grid size-8 place-items-center rounded-lg bg-[#e5f3ed] text-[#3e7662]">
+          <Icon name="check" size={16} />
+        </span>
+        <span>
+          <strong className="block font-serif text-[#2d2025]">
+            +3 Attending · Sharma Family
+          </strong>
+          <small className="text-[#756168]">
+            Mehendi, Sangeet &amp; Wedding RSVP confirmed
+          </small>
+        </span>
       </div>
     </div>
   );
@@ -302,18 +304,18 @@ function DashboardPreview() {
 
 export default function HomePage() {
   return (
-    <main className="overflow-hidden bg-[#fffaf7] text-[#2d1f24]">
+    <main className="overflow-hidden bg-[#fff8f8] text-[#1e1b1c]">
       <a
         className="fixed top-3 left-3 z-[100] -translate-y-20 rounded-md bg-[#74243d] px-4 py-2 text-sm text-white focus:translate-y-0"
         href="#main-content"
       >
         Skip to content
       </a>
-      <header className="relative z-50 border-b border-[#eadde1]/80 bg-[#fffaf7]/95 backdrop-blur">
-        <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between px-5 sm:px-8">
+      <header className="fixed top-0 right-0 left-0 z-50 border-b border-[#d9c0c4]/30 bg-[#fff8f8]/85 shadow-[0_1px_8px_rgba(32,29,30,0.03)] backdrop-blur-md">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-12">
           <Brand />
           <nav
-            className="hidden items-center gap-7 text-[13px] font-medium text-[#604b53] lg:flex"
+            className="hidden items-center gap-8 text-[13px] font-semibold text-[#544245] lg:flex"
             aria-label="Primary navigation"
           >
             <a
@@ -324,76 +326,139 @@ export default function HomePage() {
             </a>
             <a
               className="transition-colors hover:text-[#74243d]"
-              href="#collaboration"
-            >
-              For families
-            </a>
-            <a
-              className="transition-colors hover:text-[#74243d]"
               href="#how-it-works"
             >
-              How it works
+              How It Works
             </a>
             <a
               className="transition-colors hover:text-[#74243d]"
               href="#website"
             >
-              Wedding website
+              Wedding Website
+            </a>
+            <a
+              className="transition-colors hover:text-[#74243d]"
+              href="#reviews"
+            >
+              Reviews
             </a>
           </nav>
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-3 sm:gap-6">
             <Link
-              className="px-1 py-2 text-[13px] font-semibold whitespace-nowrap text-[#5a4049]"
+              className="hidden px-1 py-2 text-[13px] font-semibold whitespace-nowrap text-[#544245] sm:inline-flex"
               href="#how-it-works"
             >
-              How it works
+              Log in
             </Link>
             <Link
-              className="rounded-lg bg-[#74243d] px-3.5 py-2.5 text-xs font-semibold whitespace-nowrap text-white shadow-sm transition-colors hover:bg-[#5f1d32] sm:px-5 sm:text-[13px]"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-[#74243d] px-4 text-xs font-semibold whitespace-nowrap text-white shadow-sm transition-colors hover:bg-[#570c27] sm:px-5 sm:text-[13px]"
               href="#product-preview"
             >
-              Preview workspace
+              Start Planning
             </Link>
           </div>
         </div>
       </header>
 
-      <div id="main-content">
-        <section className="relative border-b border-[#ecdee2] px-5 pt-16 sm:px-8 sm:pt-20 lg:pt-24">
+      <div className="pt-20" id="main-content">
+        <section className="relative overflow-hidden bg-[#fff8f8] pt-8 pb-20 md:pt-14 md:pb-28">
           <div
             className="absolute top-0 right-[-12%] size-[520px] rounded-full bg-[#f6e5e9]/60 blur-3xl"
             aria-hidden="true"
           />
-          <div className="relative mx-auto grid max-w-[1200px] items-center gap-16 lg:grid-cols-[0.84fr_1.16fr] lg:gap-14">
-            <div className="max-w-[570px]">
-              <Eyebrow>One shared place for your wedding</Eyebrow>
-              <h1 className="mt-5 font-serif text-[clamp(3rem,6vw,5.5rem)] leading-[0.98] font-medium tracking-[-0.045em] text-[#342129]">
-                Plan your wedding.
-                <em className="mt-1 block font-normal text-[#8d4058]">
-                  Together.
-                </em>
-              </h1>
-              <p className="mt-7 max-w-[520px] text-base leading-7 text-[#705a62] sm:text-lg sm:leading-8">
-                Events, guests, tasks, expenses, vendors, and memories—organized
-                in one calm workspace for you and your family.
+          <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-12 lg:gap-8 lg:px-12">
+            <div className="flex max-w-[560px] flex-col items-start lg:col-span-6">
+              <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#d9c0c4]/40 bg-[#eee6e7] px-3 py-1 text-[11px] font-semibold tracking-[0.05em] text-[#570c27] uppercase">
+                <span className="size-1.5 rounded-full bg-[#74243d]" />
+                One shared place for your wedding
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <h1 className="mb-5 font-serif text-4xl leading-[1.1] font-normal tracking-[-0.02em] text-[#1e1b1c] md:text-5xl">
+                Plan your wedding.
+                <br />
+                <em className="font-normal text-[#8d4a5b]">Together.</em>
+              </h1>
+              <p className="mb-8 max-w-lg text-base leading-7 text-[#544245] sm:text-lg">
+                The shared workspace for Indian weddings. Coordinate multi-day
+                ceremonies, guests, RSVPs, and vendors with family—all in one
+                place.
+              </p>
+              <div className="mb-6 flex w-full flex-col items-stretch gap-4 sm:w-auto sm:flex-row sm:items-center">
                 <Link
-                  className="inline-flex min-h-12 items-center justify-center gap-4 rounded-lg bg-[#74243d] px-6 text-sm font-semibold text-white shadow-[0_10px_25px_rgba(116,36,61,0.18)] transition-transform hover:-translate-y-0.5"
+                  className="inline-flex h-12 items-center justify-center rounded-lg bg-[#74243d] px-7 text-[13px] font-semibold text-white shadow-md shadow-[#74243d]/20 transition-colors hover:bg-[#570c27]"
                   href="#product-preview"
                 >
-                  Preview workspace <span aria-hidden="true">→</span>
+                  Start Planning{" "}
+                  <span className="ml-2 text-lg" aria-hidden="true">
+                    →
+                  </span>
                 </Link>
                 <a
-                  className="inline-flex min-h-12 items-center justify-center rounded-lg border border-[#d8c5cb] bg-white px-6 text-sm font-semibold text-[#533943] transition-colors hover:border-[#a66f80]"
+                  className="inline-flex h-12 items-center justify-center rounded-lg border border-[#d9c0c4] bg-white px-6 text-[13px] font-semibold text-[#1e1b1c] transition-colors hover:bg-[#f4eced]"
                   href="#how-it-works"
                 >
-                  See how it works
+                  <span className="mr-2 grid size-4 place-items-center rounded-full border border-[#877275] text-[7px] text-[#544245]">
+                    ▶
+                  </span>
+                  See How It Works
                 </a>
               </div>
+              <div className="flex items-center gap-4 text-[11px] text-[#544245]">
+                <span className="inline-flex items-center font-medium text-[#570c27]">
+                  <Icon name="check" size={15} />
+                  &nbsp; Simple setup
+                </span>
+                <span className="text-[#d9c0c4]">•</span>
+                <span className="inline-flex items-center">
+                  No guest login needed
+                </span>
+              </div>
+              <div className="mt-8 flex items-center gap-4 border-t border-[#d9c0c4]/30 pt-6">
+                <div className="flex -space-x-2" aria-hidden="true">
+                  {["AK", "PR", "SM", "+5"].map((item, index) => (
+                    <span
+                      className={`grid size-8 place-items-center rounded-full text-[9px] font-bold ring-2 ring-[#fff8f8] ${index === 0 ? "bg-[#570c27] text-white" : index === 1 ? "bg-[#8d4a5b] text-white" : index === 2 ? "bg-[#2f2a26] text-white" : "bg-[#e8e1e2] text-[#544245]"}`}
+                      key={item}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-[12px] text-[#544245]">
+                  Trusted by couples &amp; joint families nationwide
+                </p>
+              </div>
             </div>
-            <div id="product-preview">
+            <div className="relative lg:col-span-6" id="product-preview">
               <DashboardPreview />
+            </div>
+          </div>
+
+          <div
+            className="mx-auto mt-20 max-w-7xl border-t border-[#d9c0c4]/30 px-6 pt-8 lg:px-12"
+            id="reviews"
+          >
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-[1.5fr_repeat(4,1fr)] lg:items-center">
+              <strong className="font-serif text-xl leading-7">
+                Built for the beautiful complexity of Indian weddings.
+              </strong>
+              {[
+                ["calendar", "Planning", "Multi-day run of show"],
+                ["guests", "Guests", "Friction-free RSVPs"],
+                ["vendors", "Vendors", "Contacts & agreements"],
+                ["gallery", "Memories", "Private albums & QR links"],
+              ].map(([icon, title, text]) => (
+                <div className="flex items-center gap-3" key={title}>
+                  <span className="grid size-9 shrink-0 place-items-center rounded border border-[#d9c0c4]/40 bg-white text-[#570c27]">
+                    <Icon name={icon as IconName} size={18} />
+                  </span>
+                  <p>
+                    <strong className="block font-serif text-[13px]">
+                      {title}
+                    </strong>
+                    <small className="text-[11px] text-[#544245]">{text}</small>
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
