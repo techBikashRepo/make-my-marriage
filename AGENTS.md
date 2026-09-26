@@ -74,9 +74,9 @@ clear.
 
 ## Current delivery state
 
-The approved application scaffold and foundation corrections are complete. The clean
-baseline was committed on branch `dev` as commit `09726b5` with message
-`Set up application foundation scaffold` and pushed to `origin/dev`.
+The scaffold, public homepage, authentication, and password recovery are implemented
+on `dev`; see `docs/PROJECT_STATUS.md` for verification and deployment limitations.
+The scaffold baseline was committed as `09726b5` and pushed to `origin/dev`.
 
 Implemented now:
 
@@ -93,22 +93,27 @@ Implemented now:
 - Unit tests for configuration, request IDs, response envelopes, unexpected-error
   sanitization, and Mongoose connection-cache behavior.
 - A safe `.env.example` containing placeholders only.
+- Signup, login, logout, current-account, forgot-password, and reset-password REST
+  endpoints with custom opaque sessions, bcrypt password hashes, CSRF checks, and
+  MongoDB-backed rate limits.
+- Auth screens, an interim signed-in account page, Resend password-reset delivery,
+  and explicit authentication index setup script.
 
 Not implemented:
 
-- Authentication or session management.
-- User, Wedding, or Wedding Member models.
-- Wedding creation or joining.
+- Wedding creation or joining behavior.
+- Wedding model and Wedding Member mutations (the auth slice includes a membership
+  read model for current-account resolution).
 - Dashboard product behavior.
 - Events, Tasks, Guests, Invitations, RSVP, Vendors, Expenses, Website, or Gallery.
-- Email, Cloudflare R2, Google Places, or other provider integrations.
-- Product API Route Handlers under `/api/v1`.
+- Email integrations beyond password reset, Cloudflare R2, Google Places, and other
+  later-phase provider integrations.
+- Product API Route Handlers beyond authentication under `/api/v1`.
 - Vercel deployment configuration beyond the application-compatible foundation.
 
-The next product milestone is Phase 1 / Feature 1, but it must not be started merely
-because this file mentions it. Implement only the feature and slice explicitly approved
-in the current user request. Do not pre-build later-phase modules or install speculative
-dependencies.
+The next product milestone is Wedding setup and membership behavior, but it must not
+be started merely because this file mentions it. Implement only the feature and slice
+explicitly approved in the current user request.
 
 ## Toolchain and package manager
 
@@ -147,6 +152,7 @@ Runtime:
 - `react`
 - `react-dom`
 - `mongoose`
+- `bcryptjs`
 - `zod`
 - `server-only`
 
@@ -172,6 +178,10 @@ Current variables:
 - `APP_BASE_URL` - public application origin used for absolute URLs.
 - `MONGODB_URI` - server-only MongoDB connection URI.
 - `MONGODB_MAX_POOL_SIZE` - positive integer, default `10`, maximum `50`.
+- `AUTH_BCRYPT_COST` - bcrypt work factor, default `12`.
+- `AUTH_SESSION_DAYS` - session lifetime, default `7`.
+- `AUTH_RESET_MINUTES` - reset-token lifetime, default `30`.
+- `RESEND_API_KEY` and `EMAIL_FROM` - required for password-reset delivery.
 
 Rules:
 
@@ -181,6 +191,8 @@ Rules:
 - Keep placeholder values in `.env.example`; never add usable credentials.
 - Runtime configuration is validated lazily when server infrastructure uses it, so the
   static shell and production build do not require live MongoDB credentials.
+- In production, automatic Mongoose index creation is disabled. Run
+  `pnpm run db:ensure-auth-indexes` with `MONGODB_URI` set before accepting auth traffic.
 
 ## Repository structure
 
@@ -341,7 +353,7 @@ The Wedding is the tenant boundary:
 
 ## Authentication boundary for future work
 
-Authentication is not implemented yet. When it is explicitly approved:
+Authentication is implemented. For later auth changes:
 
 - Follow the custom email/password and MongoDB-backed opaque-session design. Do not add
   Clerk, Auth0, Better Auth, or another auth framework without an approved design change.
@@ -354,8 +366,8 @@ Authentication is not implemented yet. When it is explicitly approved:
 - Read the complete authentication sections in all authoritative documents before
   selecting hashing packages, cookie settings, TTLs, indexes, or transaction behavior.
 
-Do not install an authentication dependency merely because authentication is next.
-Select and install it only as part of an explicitly approved Feature 1 plan.
+The current password-hashing dependency is `bcryptjs`; do not replace the session or
+hashing design without checking the authoritative documents.
 
 ## Logging and security
 

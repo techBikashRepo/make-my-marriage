@@ -346,13 +346,13 @@ export default function HomePage() {
           <div className="flex items-center gap-3 sm:gap-6">
             <Link
               className="hidden px-1 py-2 text-[13px] font-semibold whitespace-nowrap text-[#544245] sm:inline-flex"
-              href="#how-it-works"
+              href="/login"
             >
               Log in
             </Link>
             <Link
               className="inline-flex h-10 items-center justify-center rounded-full bg-[#74243d] px-4 text-xs font-semibold whitespace-nowrap text-white shadow-sm transition-colors hover:bg-[#570c27] sm:px-5 sm:text-[13px]"
-              href="#product-preview"
+              href="/signup"
             >
               Start Planning
             </Link>
@@ -385,7 +385,7 @@ export default function HomePage() {
               <div className="mb-6 flex w-full flex-col items-stretch gap-4 sm:w-auto sm:flex-row sm:items-center">
                 <Link
                   className="inline-flex h-12 items-center justify-center rounded-lg bg-[#74243d] px-7 text-[13px] font-semibold text-white shadow-md shadow-[#74243d]/20 transition-colors hover:bg-[#570c27]"
-                  href="#product-preview"
+                  href="/signup"
                 >
                   Start Planning{" "}
                   <span className="ml-2 text-lg" aria-hidden="true">
@@ -899,9 +899,9 @@ export default function HomePage() {
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
                 className="inline-flex min-h-12 items-center justify-center gap-4 rounded-lg bg-white px-6 text-sm font-bold text-[#74243d]"
-                href="#product-preview"
+                href="/signup"
               >
-                Preview workspace <span aria-hidden="true">→</span>
+                Start planning <span aria-hidden="true">→</span>
               </Link>
               <a
                 className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/40 px-6 text-sm font-semibold text-white"

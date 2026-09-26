@@ -13,15 +13,16 @@ the public homepage depicts it.
 
 ## Current state
 
-As of 2026-09-26, the application scaffold and public homepage are complete. The
-homepage is a responsive, static presentation of the planned product. The first
-authenticated product feature has not been implemented.
+As of 2026-09-26, the scaffold, public homepage, and authentication/password-recovery
+code are complete. The homepage remains a static presentation of planned wedding
+features. Wedding setup and the authenticated dashboard are still pending.
 
 | Area | Status | What exists now |
 | --- | --- | --- |
 | Application foundation | Complete | Next.js App Router shell, TypeScript, Tailwind, project tooling, validated server configuration, shared HTTP/logging primitives, and cached Mongoose connection utility. |
 | Public homepage | Complete | Responsive landing page with the approved content sections, Stitch-aligned branding, local fonts, and static dashboard/feature previews. |
-| Phase 1 product behavior | Not started | Authentication, Wedding creation, Wedding Members, and the authenticated dashboard remain to be built. |
+| Account access and recovery | Implemented; live integration pending | Signup, login, logout, current account, forgot/reset password, secure sessions, rate limits, auth pages, and an interim account page. |
+| Wedding setup and dashboard | Not started | Wedding creation, joining, member management, and the authenticated dashboard remain to be built. |
 | Later product phases | Not started | Events, tasks, guests/RSVP, expenses/vendors, wedding website, gallery, and provider integrations remain to be built. |
 
 ## Completed milestones
@@ -52,13 +53,32 @@ authenticated product feature has not been implemented.
   tests, and the production build passed. The built page was visually checked at
   desktop and mobile widths without browser console errors.
 - **Limitations:** Dashboard figures and feature examples are static presentation
-  data. The homepage does not create accounts, persist wedding data, or call a
-  product API. Its planning actions currently lead to on-page previews because
-  authentication routes are not implemented.
+  data. The homepage now links its account actions to signup/login, but its product
+  previews do not persist wedding data.
+
+### 3. Account access and password recovery
+
+- **Delivered:** Zod-validated signup, login, logout, current-account, forgot-password,
+  and reset-password REST routes; bcrypt password hashes; MongoDB-backed opaque sessions
+  and one-time reset tokens; same-origin checks; rate limiting; Resend reset delivery;
+  signup/login/recovery pages and a signed-in account page. Homepage account actions
+  now lead to the corresponding pages.
+- **Security:** Raw session/reset tokens are never stored in MongoDB; reset consumes its
+  token and revokes sessions in a transaction. Production auth indexes are created by
+  `pnpm run db:ensure-auth-indexes`, with automatic production indexing disabled.
+- **Verification:** `format:check`, `typecheck`, `lint`, `test:unit` (31 passing),
+  `test:coverage` (31 passing), and `build` passed. Production-mode HTTP checks
+  returned 200 for public auth pages, 307 from `/account` when signed out, 401
+  from `/auth/me`, 400 for invalid signup input, 403 for a cross-origin mutation,
+  and 204 with a cleared cookie for repeated logout. A separate read-only Mongoose
+  connection and `ping` to the local configuration's Atlas database `mmm-db` succeeded.
+- **Limitations:** The live signup/session/reset flows and Resend delivery have not
+  been integration-tested. Wedding creation and joining remain the next separate
+  feature; the account page reflects that boundary.
 
 ## Next milestone
 
-The PRD's Phase 1 calls for authentication, Wedding creation, Wedding Members,
+The PRD's Phase 1 next calls for Wedding creation, Wedding Members,
 and an authenticated dashboard shell. Those are future, separate feature slices;
 this status document does not authorize starting any of them. Follow the current
 user request and the four authoritative design documents before implementing a

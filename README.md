@@ -57,7 +57,22 @@ See:
 
 ## Development
 
-Project setup instructions will be added as implementation begins.
+Use Node.js `24.21.0` and pnpm `12.5.1`:
+
+```powershell
+pnpm install --frozen-lockfile
+Copy-Item .env.example .env.local
+pnpm dev
+```
+
+Set a working MongoDB Atlas URI in `.env.local` for account features. Configure a
+verified Resend sender and API key to deliver password-reset email. The public
+homepage can run without those services. Before production authentication traffic,
+create the documented unique and TTL indexes with
+`pnpm run db:ensure-auth-indexes` in an environment where `MONGODB_URI` is set.
+
+Run `pnpm run format:check`, `pnpm run typecheck`, `pnpm run lint`,
+`pnpm run test:unit`, and `pnpm run build` before handing off changes.
 
 ## Status
 

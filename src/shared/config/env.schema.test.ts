@@ -13,6 +13,9 @@ describe("parseServerEnvironment", () => {
       APP_BASE_URL: "http://localhost:3000",
       MONGODB_URI: "mongodb://localhost:27017/make-my-marriage-test",
       MONGODB_MAX_POOL_SIZE: 10,
+      AUTH_BCRYPT_COST: 12,
+      AUTH_SESSION_DAYS: 7,
+      AUTH_RESET_MINUTES: 30,
     });
   });
 
