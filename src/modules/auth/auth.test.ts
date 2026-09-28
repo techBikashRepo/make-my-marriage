@@ -57,6 +57,39 @@ describe("authentication input boundaries", () => {
     ).toEqual({ email: "user@example.com" });
   });
 
+  it("rejects passwords bcrypt would silently truncate on signup and reset", () => {
+    const exactLimit = "a".repeat(72);
+    const overLimit = `${exactLimit}b`;
+    const multibyteOverLimit = `${"é".repeat(36)}a`;
+    expect(
+      signupSchema.safeParse({
+        name: "Asha",
+        email: "asha@example.com",
+        password: exactLimit,
+      }).success,
+    ).toBe(true);
+    for (const value of [overLimit, multibyteOverLimit]) {
+      expect(
+        signupSchema.safeParse({
+          name: "Asha",
+          email: "asha@example.com",
+          password: value,
+        }).success,
+      ).toBe(false);
+      expect(
+        resetPasswordSchema.safeParse({
+          token: createOpaqueToken(),
+          newPassword: value,
+        }).success,
+      ).toBe(false);
+      // Existing accounts may have passwords created before the byte limit.
+      expect(
+        loginSchema.safeParse({ email: "asha@example.com", password: value })
+          .success,
+      ).toBe(true);
+    }
+  });
+
   it("accepts only a complete opaque reset token", () => {
     expect(
       resetPasswordSchema.safeParse({
@@ -118,6 +151,27 @@ describe("authentication HTTP boundary", () => {
         }),
       ),
     ).not.toThrow();
+    expect(() =>
+      requireSameOrigin(
+        new Request("http://localhost:3100/api/v1/auth/login", {
+          headers: { origin: "http://localhost:3100" },
+        }),
+      ),
+    ).not.toThrow();
+    expect(() =>
+      requireSameOrigin(
+        new Request("http://localhost:3100/api/v1/auth/login", {
+          headers: { referer: "http://localhost:3100/login" },
+        }),
+      ),
+    ).not.toThrow();
+    expect(() =>
+      requireSameOrigin(
+        new Request("http://localhost:3100/api/v1/auth/login", {
+          headers: { origin: "http://localhost:3000" },
+        }),
+      ),
+    ).toThrow("Request origin is not allowed");
     expect(() =>
       requireSameOrigin(new Request("http://localhost:3000/api/v1/auth/login")),
     ).toThrow();

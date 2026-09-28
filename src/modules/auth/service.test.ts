@@ -16,6 +16,7 @@ const mocks = vi.hoisted(() => ({
   resetFindOneAndUpdate: vi.fn(),
   resetCreate: vi.fn(),
   resetDeleteOne: vi.fn(),
+  resetUpdateMany: vi.fn(),
   sendPasswordResetEmail: vi.fn(),
   withTransaction: vi.fn(),
   endSession: vi.fn(),
@@ -54,6 +55,7 @@ vi.mock("@/modules/auth/models", () => ({
     findOneAndUpdate: mocks.resetFindOneAndUpdate,
     create: mocks.resetCreate,
     deleteOne: mocks.resetDeleteOne,
+    updateMany: mocks.resetUpdateMany,
   },
   WeddingMember: { findOne: vi.fn(() => ({ lean: () => null })) },
 }));
@@ -79,9 +81,10 @@ beforeEach(() => {
   mocks.sessionDeleteOne.mockResolvedValue({});
   mocks.sessionDeleteMany.mockResolvedValue({});
   mocks.resetDeleteOne.mockResolvedValue({});
+  mocks.resetUpdateMany.mockResolvedValue({ modifiedCount: 1 });
   mocks.endSession.mockResolvedValue(undefined);
   mocks.withTransaction.mockImplementation(
-    async (callback: () => Promise<void>) => callback(),
+    async (callback: () => Promise<boolean>) => callback(),
   );
 });
 
@@ -158,7 +161,7 @@ describe("authentication service security behavior", () => {
     expect(mocks.userFindById).not.toHaveBeenCalled();
   });
 
-  it("consumes reset credentials and revokes every session after changing the hash", async () => {
+  it("consumes all reset credentials and revokes every session after changing the hash", async () => {
     mocks.resetFindOneAndUpdate.mockResolvedValue({ userId });
     mocks.userUpdateOne.mockResolvedValue({ matchedCount: 1 });
     const { resetPassword } = await import("@/modules/auth/service");
@@ -177,6 +180,29 @@ describe("authentication service security behavior", () => {
       { userId },
       expect.anything(),
     );
+    expect(mocks.resetUpdateMany).toHaveBeenCalledWith(
+      { userId, usedAt: { $exists: false } },
+      { $set: { usedAt: expect.any(Date) } },
+      { session: expect.anything() },
+    );
+    expect(mocks.endSession).toHaveBeenCalledOnce();
+  });
+
+  it("does not report success when a retried reset transaction cannot consume the token", async () => {
+    mocks.resetFindOneAndUpdate
+      .mockResolvedValueOnce({ userId })
+      .mockResolvedValueOnce(null);
+    mocks.userUpdateOne.mockResolvedValue({ matchedCount: 1 });
+    mocks.withTransaction.mockImplementationOnce(
+      async (callback: () => Promise<boolean>) => {
+        await callback(); // Simulate an aborted first transaction attempt.
+        return callback();
+      },
+    );
+    const { resetPassword } = await import("@/modules/auth/service");
+    await expect(
+      resetPassword("A".repeat(43), "new correct horse battery"),
+    ).rejects.toMatchObject({ code: "INVALID_RESET_TOKEN", status: 400 });
     expect(mocks.endSession).toHaveBeenCalledOnce();
   });
 

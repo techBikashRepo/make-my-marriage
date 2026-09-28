@@ -227,8 +227,7 @@ export async function resetPassword(
   );
   const dbSession = await mongoose.startSession();
   try {
-    let consumed = false;
-    await dbSession.withTransaction(async () => {
+    const consumed = await dbSession.withTransaction(async () => {
       const reset = await PasswordResetToken.findOneAndUpdate(
         {
           tokenHash,
@@ -238,7 +237,7 @@ export async function resetPassword(
         { $set: { usedAt: new Date() } },
         { new: true, session: dbSession },
       );
-      if (!reset) return;
+      if (!reset) return false;
       const updated = await User.updateOne(
         { _id: reset.userId },
         { $set: { passwordHash } },
@@ -251,7 +250,12 @@ export async function resetPassword(
         { userId: reset.userId },
         { session: dbSession },
       );
-      consumed = true;
+      await PasswordResetToken.updateMany(
+        { userId: reset.userId, usedAt: { $exists: false } },
+        { $set: { usedAt: new Date() } },
+        { session: dbSession },
+      );
+      return true;
     });
     if (!consumed) {
       throw new ApiError({

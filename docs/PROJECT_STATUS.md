@@ -22,7 +22,7 @@ cards are still pending.
 | --- | --- | --- |
 | Application foundation | Complete | Next.js App Router shell, TypeScript, Tailwind, project tooling, validated server configuration, shared HTTP/logging primitives, and cached Mongoose connection utility. |
 | Public homepage | Complete | Responsive landing page with the approved content sections, Stitch-aligned branding, local fonts, and static dashboard/feature previews. |
-| Account access and recovery | Implemented; live integration pending | Signup, login, logout, current account, forgot/reset password, secure sessions, rate limits, and auth pages. |
+| Account access and recovery | Core browser flows verified; recovery delivery unverified | Signup, login, logout, current account, forgot/reset password, secure sessions, rate limits, and auth pages. Signup, login, logout, and dashboard access were exercised against the local Atlas-backed app. |
 | Protected dashboard landing | Complete | Successful signup/login leads to `/dashboard`; the page resolves the server-side session and shows the current membership or the Create/Join paths. `/account` redirects there. |
 | Wedding setup and dashboard data | Not started | Wedding creation, joining, member management, and live dashboard cards remain to be built. |
 | Later product phases | Not started | Events, tasks, guests/RSVP, expenses/vendors, wedding website, gallery, and provider integrations remain to be built. |
@@ -66,17 +66,28 @@ cards are still pending.
   signup/login/recovery pages and a signed-in account page. Homepage account actions
   now lead to the corresponding pages.
 - **Security:** Raw session/reset tokens are never stored in MongoDB; reset consumes its
-  token and revokes sessions in a transaction. Production auth indexes are created by
-  `pnpm run db:ensure-auth-indexes`, with automatic production indexing disabled.
+  token, invalidates other unused reset tokens for the account, and revokes sessions
+  in a transaction. Signup and reset reject passwords exceeding bcrypt's 72-byte
+  UTF-8 input limit; login still accepts longer passwords for existing accounts.
+  Same-origin checks use the request's origin. Production auth indexes are created
+  by `pnpm run db:ensure-auth-indexes`, with automatic production indexing disabled.
 - **Verification:** `format:check`, `typecheck`, `lint`, `test:unit` (31 passing),
   `test:coverage` (31 passing), and `build` passed. Production-mode HTTP checks
   returned 200 for public auth pages, 307 from `/account` when signed out, 401
   from `/auth/me`, 400 for invalid signup input, 403 for a cross-origin mutation,
   and 204 with a cleared cookie for repeated logout. A separate read-only Mongoose
   connection and `ping` to the local configuration's Atlas database `mmm-db` succeeded.
-- **Limitations:** The live signup/session/reset flows and Resend delivery have not
-  been integration-tested. Wedding creation and joining remain the next separate
-  feature.
+  A later manual test in the Codex in-app Chromium browser against `localhost:3000`
+  created a QA account and verified signup to `/dashboard`, session persistence on
+  reload, logout, signed-out dashboard redirect, successful login, and a second
+  logout. Required fields, malformed email, short password, duplicate signup,
+  wrong password, and unknown email were checked. Review follow-up changes passed
+  `format:check`, `typecheck`, `lint`, `test:unit` (33 passing), `test:coverage`
+  (33 passing), and `build`.
+- **Limitations:** The live forgot/reset-password flow and Resend delivery have not
+  been integration-tested. The manual browser test used in-app Chromium because
+  Google Chrome was unavailable to the browser-control connection. Wedding creation
+  and joining remain the next separate feature.
 
 ### 4. Protected dashboard landing
 

@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 
 import { SESSION_COOKIE } from "@/modules/auth/service";
-import { getServerEnvironment } from "@/shared/config/env";
 import { ApiError } from "@/shared/errors/api-error";
 import { createRequestContext } from "@/shared/http/request-context";
 import { errorResponse } from "@/shared/http/response";
@@ -40,7 +39,7 @@ export async function parseBody<T>(
 }
 
 export function requireSameOrigin(request: Request): void {
-  const expected = new URL(getServerEnvironment().APP_BASE_URL).origin;
+  const expected = new URL(request.url).origin;
   const source =
     request.headers.get("origin") ?? request.headers.get("referer");
   let sourceOrigin: string | undefined;
