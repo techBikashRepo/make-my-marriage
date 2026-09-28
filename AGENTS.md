@@ -96,8 +96,9 @@ Implemented now:
 - Signup, login, logout, current-account, forgot-password, and reset-password REST
   endpoints with custom opaque sessions, bcrypt password hashes, CSRF checks, and
   MongoDB-backed rate limits.
-- Auth screens, an interim signed-in account page, Resend password-reset delivery,
-  and explicit authentication index setup script.
+- Auth screens, a protected `/dashboard` landing page, Resend password-reset delivery,
+  and explicit authentication index setup script. The old `/account` route redirects
+  to `/dashboard`.
 
 Not implemented:
 

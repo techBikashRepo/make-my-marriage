@@ -13,16 +13,18 @@ the public homepage depicts it.
 
 ## Current state
 
-As of 2026-09-26, the scaffold, public homepage, and authentication/password-recovery
-code are complete. The homepage remains a static presentation of planned wedding
-features. Wedding setup and the authenticated dashboard are still pending.
+As of 2026-09-28, the scaffold, public homepage, authentication/password recovery,
+and protected dashboard landing page are complete. The homepage remains a static
+presentation of planned wedding features. Wedding setup and data-driven dashboard
+cards are still pending.
 
 | Area | Status | What exists now |
 | --- | --- | --- |
 | Application foundation | Complete | Next.js App Router shell, TypeScript, Tailwind, project tooling, validated server configuration, shared HTTP/logging primitives, and cached Mongoose connection utility. |
 | Public homepage | Complete | Responsive landing page with the approved content sections, Stitch-aligned branding, local fonts, and static dashboard/feature previews. |
-| Account access and recovery | Implemented; live integration pending | Signup, login, logout, current account, forgot/reset password, secure sessions, rate limits, auth pages, and an interim account page. |
-| Wedding setup and dashboard | Not started | Wedding creation, joining, member management, and the authenticated dashboard remain to be built. |
+| Account access and recovery | Implemented; live integration pending | Signup, login, logout, current account, forgot/reset password, secure sessions, rate limits, and auth pages. |
+| Protected dashboard landing | Complete | Successful signup/login leads to `/dashboard`; the page resolves the server-side session and shows the current membership or the Create/Join paths. `/account` redirects there. |
+| Wedding setup and dashboard data | Not started | Wedding creation, joining, member management, and live dashboard cards remain to be built. |
 | Later product phases | Not started | Events, tasks, guests/RSVP, expenses/vendors, wedding website, gallery, and provider integrations remain to be built. |
 
 ## Completed milestones
@@ -74,7 +76,21 @@ features. Wedding setup and the authenticated dashboard are still pending.
   connection and `ping` to the local configuration's Atlas database `mmm-db` succeeded.
 - **Limitations:** The live signup/session/reset flows and Resend delivery have not
   been integration-tested. Wedding creation and joining remain the next separate
-  feature; the account page reflects that boundary.
+  feature.
+
+### 4. Protected dashboard landing
+
+- **Delivered:** Signup and login navigate to `/dashboard`. The protected page
+  resolves the session on the server and redirects signed-out visitors to login.
+  Accounts without a Wedding see the documented Create or Join paths; existing
+  members see their workspace role. The former `/account` URL redirects to the
+  dashboard.
+- **Verification:** Formatting, type checking, linting, all 31 unit tests, and the
+  production build passed. Production-mode HTTP checks returned 307 from
+  `/account` to `/dashboard`, 307 from `/dashboard` to `/login` when signed out,
+  and 200 for `/login`.
+- **Limitations:** The Create/Join flows and data-driven dashboard cards belong to
+  later feature slices. No sample figures are presented as live Wedding data.
 
 ## Next milestone
 

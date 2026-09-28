@@ -89,7 +89,7 @@ export function AuthForm({
       if (mode === "forgot" || mode === "reset") {
         setDone(true);
       } else {
-        router.replace("/account");
+        router.replace("/dashboard");
         router.refresh();
       }
     } catch {

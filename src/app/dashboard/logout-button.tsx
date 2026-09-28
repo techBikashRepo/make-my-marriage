@@ -7,6 +7,7 @@ export function LogoutButton() {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+
   async function logout() {
     setBusy(true);
     setError("");
@@ -23,10 +24,11 @@ export function LogoutButton() {
       setBusy(false);
     }
   }
+
   return (
     <div>
       <button
-        className="rounded-lg border border-[#74243d] px-5 py-3 text-sm font-semibold text-[#74243d]"
+        className="rounded-full border border-[#d7b8c2] px-5 py-2.5 text-sm font-semibold text-[#74243d] transition-colors hover:bg-[#f9eff1] disabled:opacity-60"
         type="button"
         onClick={logout}
         disabled={busy}
